@@ -8,7 +8,7 @@ export const drawRect = (detections, ctx) => {
 
         const color = '#' + Math.floor(Math.random()*16777215).toString(16);
         ctx.strokeStyle = color
-        ctx.Font = '18px Arial'
+        ctx.Font = '16px Arial'
         ctx.fillStyle = color
 
         ctx.beginPath()

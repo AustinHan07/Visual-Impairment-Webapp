@@ -1,6 +1,9 @@
 // Import dependencies
 import React, { useRef, useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
+import '@tensorflow/tfjs-backend-webgpu';
+
+tf.setBackend('webgpu').then(() => main()); 
 // 1. TODO - Import required model here
 // e.g. import * as tfmodel from "@tensorflow-models/tfmodel";
 import * as cocossd from "@tensorflow-models/coco-ssd";
