@@ -5,7 +5,6 @@
   "dependencies": {
     "@tensorflow-models/coco-ssd": "^2.1.0",
     "@tensorflow/tfjs": "^2.8.6",
-    "@tensorflow/tfjs-backend-webgpu": "*",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
