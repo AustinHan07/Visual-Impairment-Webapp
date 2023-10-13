@@ -8,7 +8,9 @@ export const drawRect = (detections, ctx) => {
         const color = 'green';
         ctx.strokeStyle = color;
         ctx.fillStyle = color;
-        ctx.font = "75px Arial";
+
+        var fontsize = (height * width) / 1000;
+        ctx.font = fontsize + "px Arial";
 
         ctx.beginPath();
         ctx.fillText(text, x, y + 0.5 * height);
