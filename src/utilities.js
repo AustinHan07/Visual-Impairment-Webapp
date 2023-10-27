@@ -9,6 +9,8 @@ export const drawRect = (detections, ctx) => {
         ctx.strokeStyle = color;
         ctx.fillStyle = color;
         ctx.textAlign = "center";
+        var fontsize = (height * width) / 1000;
+        ctx.font = fontsize + "px Arial";
         ctx.beginPath();
 
         // Calculate the font size based on text length
