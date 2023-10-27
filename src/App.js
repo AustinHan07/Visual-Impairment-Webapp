@@ -12,6 +12,7 @@ import "./App.css";
 // 2. TODO - Import drawing utility here
 // e.g. import { drawRect } from "./utilities";
 import {drawRect} from "./utilities";
+import {printObjects} from "./utilities";
 
 function App() {
   const webcamRef = useRef(null);
@@ -59,6 +60,7 @@ function App() {
       // 5. TODO - Update drawing utility
       // drawSomething(obj, ctx)  
       drawRect(obj, ctx);
+      printObjects(obj, ctx);
     }
   };
 
