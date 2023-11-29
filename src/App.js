@@ -1,6 +1,7 @@
 // Import dependencies
 import React, { useRef, useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
+import ObjectList from "./ObjectList";
 // import '@tensorflow/tfjs-backend-webgpu';
 
 // tf.setBackend('webgpu').then(() => main()); 
@@ -15,6 +16,7 @@ import {drawRect} from "./utilities";
 import {printObjects} from "./utilities";
 
 function App() {
+  const [obj, setObj] = useState([]);
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -54,6 +56,8 @@ function App() {
       const obj = await net.detect(video);
       console.log(obj);
       
+      setObj(obj);
+
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
 
@@ -99,9 +103,11 @@ function App() {
             height: 480,
           }}
         />
+        <ObjectList detections={obj} />
       </header>
     </div>
   );
+  
 }
 
 export default App;

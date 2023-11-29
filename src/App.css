@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.object-list {
+  position: absolute;
+  top: 25%;
+  right: 10%;
+  width: 200px;
+  height: 400px;
+  overflow-y: scroll;
+  background-color: lightblue;
+  border: 1px solid blue;
+  padding: 10px;
+  margin: 10px;
+}
+
+.object-list ul {
+  font-size: 40px;
+  color: white;
+  list-style: none;
+}
