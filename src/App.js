@@ -12,8 +12,11 @@ import Webcam from "react-webcam";
 import "./App.css";
 // 2. TODO - Import drawing utility here
 // e.g. import { drawRect } from "./utilities";
-import {drawRect} from "./utilities";
-import {printObjects} from "./utilities";
+import { drawRect } from "./utilities";
+import { printObjects } from "./utilities";
+
+const canvasWidth = 640;
+const canvasHeight = 480;
 
 function App() {
   const [obj, setObj] = useState([]);
@@ -22,7 +25,7 @@ function App() {
 
   // Main function
   const runCoco = async () => {
-    // 3. TODO - Load network 
+    // 3. TODO - Load network
     // e.g. const net = await cocossd.load();
     const net = await cocossd.load();
 
@@ -55,27 +58,29 @@ function App() {
       // e.g. const obj = await net.detect(video);
       const obj = await net.detect(video);
       console.log(obj);
-      
+
       setObj(obj);
 
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
 
       // 5. TODO - Update drawing utility
-      // drawSomething(obj, ctx)  
+      // drawSomething(obj, ctx)
       drawRect(obj, ctx);
       printObjects(obj, ctx);
     }
   };
 
-  useEffect(()=>{runCoco()},[]);
+  useEffect(() => {
+    runCoco();
+  }, []);
 
   return (
     <div className="App">
       <header className="App-header">
         <Webcam
           ref={webcamRef}
-          muted={true} 
+          muted={true}
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -103,11 +108,15 @@ function App() {
             height: 480,
           }}
         />
-        <ObjectList detections={obj} />
+        {/* Pass them to the ObjectList component */}
+        <ObjectList
+          detections={obj}
+          canvasWidth={canvasWidth}
+          canvasHeight={canvasHeight}
+        />
       </header>
     </div>
   );
-  
 }
 
 export default App;
