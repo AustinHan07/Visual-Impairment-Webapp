@@ -5,7 +5,7 @@ export const drawRect = (detections, ctx) => {
     const [x, y, width, height] = prediction["bbox"];
     const text = prediction["class"];
 
-    const color = "green";
+    const color = "#" + Math.floor(Math.random()*16777215).toString(16);
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
     ctx.textAlign = "center";
@@ -44,23 +44,6 @@ export const printObjects = (detections, ctx) => {
     const fontSize = (maxSize / textLength) * 2.25; // Adjust the scaling factor as needed
 
     ctx.font = `${fontSize}px Arial`;
-
-    // Print the class and score at the center of the bounding box
-    ctx.fillText(
-      `${text}: ${score}`,
-      prediction.bbox[0] + prediction.bbox[2] / 2,
-      prediction.bbox[1] + prediction.bbox[3] / 2
-    );
-
-    // Print the positions below the bounding box
-    positions.forEach((position, index) => {
-      ctx.fillText(
-        position,
-        prediction.bbox[0] + prediction.bbox[2] / 2,
-        prediction.bbox[1] + prediction.bbox[3] + (index + 1) * fontSize
-      );
-    });
-
     // Get the center coordinates of the bounding box
     const x = prediction.bbox[0] + prediction.bbox[2] / 2;
     const y = prediction.bbox[1] + prediction.bbox[3] / 2;
@@ -72,38 +55,33 @@ export const printObjects = (detections, ctx) => {
     // Calculate the angle of the bounding box relative to the canvas center
     // Use Math.atan to get the angle in radians
     // Use Math.PI to convert radians to degrees
-    let angle = Math.atan((centerY - y) / x) * (180 / Math.PI);
-
-    // Handle the special cases when x is zero or negative
-    if (x === 0) {
-      // If x is zero, the angle is either 90 or -90 degrees
-      angle = y > centerY ? 90 : -90;
-    } else if (x < 0) {
-      // If x is negative, the angle is either 180 or -180 degrees
-      angle = y > centerY ? 180 : -180;
-    }
+    let angle = Math.atan((centerY - y) / (x - centerX)) * (180 / Math.PI);
+    console.log(angle);
 
     // Initialize a variable to store the clock position
     let clockPosition = "";
 
     // Use a switch statement to assign the clock position based on the angle range
     switch (true) {
-      case angle >= 0 && angle < 30:
-        clockPosition = "12 o'clock";
+      case angle >= 0 && angle < 15:
+        clockPosition = "3 o'clock";
         break;
-      case angle >= 30 && angle < 60:
-        clockPosition = "11 o'clock";
-        break;
-      case angle >= 60 && angle < 90:
-        clockPosition = "10 o'clock";
-        break;
-      case angle >= 90 && angle < 120:
-        clockPosition = "1 o'clock";
-        break;
-      case angle >= 120 && angle < 150:
+      case angle >= 15 && angle < 45:
         clockPosition = "2 o'clock";
         break;
-      case angle >= 150 && angle < 180:
+      case angle >= 45 && angle < 75:
+        clockPosition = "1 o'clock";
+        break;
+      case (angle >= 75 && angle <= 90) || (angle >= -15 && angle <= 0):
+        clockPosition = "12 o'clock";
+        break;
+      case angle >= -90 && angle < -75:
+        clockPosition = "11 o'clock";
+        break;
+      case angle >= -75 && angle < -45:
+        clockPosition = "10 o'clock";
+        break;
+      case angle >= -45 && angle < -15:
         clockPosition = "9 o'clock";
         break;
       default:
@@ -117,7 +95,9 @@ export const printObjects = (detections, ctx) => {
       prediction.bbox[1] + prediction.bbox[3] + (positions.length + 1) * fontSize
     );
 
-    // Add the clock position to the prediction object
+    // Add the angle and the clock position to the prediction object
+    prediction.angle = angle;
     prediction.clockPosition = clockPosition;
+
   });
 };

@@ -1,79 +1,70 @@
-// Import dependencies
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
-import ObjectList from "./ObjectList";
-// import '@tensorflow/tfjs-backend-webgpu';
-
-// tf.setBackend('webgpu').then(() => main()); 
-// 1. TODO - Import required model here
-// e.g. import * as tfmodel from "@tensorflow-models/tfmodel";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
 import "./App.css";
-// 2. TODO - Import drawing utility here
-// e.g. import { drawRect } from "./utilities";
+import ObjectList from "./ObjectList";
 import { drawRect } from "./utilities";
 import { printObjects } from "./utilities";
 
-const canvasWidth = 640;
-const canvasHeight = 480;
-
 function App() {
-  const [obj, setObj] = useState([]);
+  // Create a state for the detections array
+  const [detections, setDetections] = useState([]);
+
+  // Create a ref for the webcam and the canvas elements
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
-  // Main function
+  // Define a function to run the COCO-SSD model
   const runCoco = async () => {
-    // 3. TODO - Load network
-    // e.g. const net = await cocossd.load();
+    // Load the model
     const net = await cocossd.load();
 
+    // Detect objects from the webcam stream
+    const detect = async () => {
+      // Check if the webcam is ready
+      if (
+        typeof webcamRef.current !== "undefined" &&
+        webcamRef.current !== null &&
+        webcamRef.current.video.readyState === 4
+      ) {
+        // Get the video properties
+        const video = webcamRef.current.video;
+        const videoWidth = webcamRef.current.video.videoWidth;
+        const videoHeight = webcamRef.current.video.videoHeight;
+
+        // Set the video and canvas dimensions
+        webcamRef.current.video.width = videoWidth;
+        webcamRef.current.video.height = videoHeight;
+        canvasRef.current.width = videoWidth;
+        canvasRef.current.height = videoHeight;
+
+        // Make detections
+        const obj = await net.detect(video);
+
+        // Update the state with the detections
+        setDetections(obj);
+
+        // Draw the detections on the canvas
+        const ctx = canvasRef.current.getContext("2d");
+        drawRect(obj, ctx);
+        printObjects(obj, ctx);
+      }
+    };
+
+    // Call the detect function every 10 milliseconds
     setInterval(() => {
-      detect(net);
+      detect();
     }, 10);
   };
 
-  const detect = async (net) => {
-    // Check data is available
-    if (
-      typeof webcamRef.current !== "undefined" &&
-      webcamRef.current !== null &&
-      webcamRef.current.video.readyState === 4
-    ) {
-      // Get Video Properties
-      const video = webcamRef.current.video;
-      const videoWidth = webcamRef.current.video.videoWidth;
-      const videoHeight = webcamRef.current.video.videoHeight;
-
-      // Set video width
-      webcamRef.current.video.width = videoWidth;
-      webcamRef.current.video.height = videoHeight;
-
-      // Set canvas height and width
-      canvasRef.current.width = videoWidth;
-      canvasRef.current.height = videoHeight;
-
-      // 4. TODO - Make Detections
-      // e.g. const obj = await net.detect(video);
-      const obj = await net.detect(video);
-      console.log(obj);
-
-      setObj(obj);
-
-      // Draw mesh
-      const ctx = canvasRef.current.getContext("2d");
-
-      // 5. TODO - Update drawing utility
-      // drawSomething(obj, ctx)
-      drawRect(obj, ctx);
-      printObjects(obj, ctx);
-    }
-  };
-
+  // Use the useEffect hook to run the COCO-SSD model once when the component mounts
   useEffect(() => {
     runCoco();
   }, []);
+
+  const canvasWidth = 640;
+  const canvasHeight = 480;
 
   return (
     <div className="App">
@@ -108,9 +99,9 @@ function App() {
             height: 480,
           }}
         />
-        {/* Pass them to the ObjectList component */}
+        {/* Pass the detections state to the ObjectList component */}
         <ObjectList
-          detections={obj}
+          detections={detections}
           canvasWidth={canvasWidth}
           canvasHeight={canvasHeight}
         />

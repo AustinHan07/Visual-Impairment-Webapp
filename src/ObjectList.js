@@ -56,14 +56,12 @@ function ObjectList(props) {
     <div className="object-list">
       <TextField
         id="outlined-multiline-static"
-        label="Objects detected"
+        label="Objects detected"s
         multiline
         rows={10}
         value={detections.map(
           (prediction) =>
-            `${prediction.class}: ${prediction.score.toFixed(2)}\n${
-              prediction.positions.join("\n") + "\n"
-            }${prediction.clockPosition ? prediction.clockPosition + "\n" : ""}`
+            `${prediction.class}: ${prediction.score.toFixed(2)}\n${prediction.positions.join("\n")}\n`
         )}
         variant="outlined"
       />
