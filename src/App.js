@@ -32,7 +32,7 @@ function App() {
         const video = webcamRef.current.video;
         const videoWidth = webcamRef.current.video.videoWidth;
         const videoHeight = webcamRef.current.video.videoHeight;
-
+ 
         // Set the video and canvas dimensions
         webcamRef.current.video.width = videoWidth;
         webcamRef.current.video.height = videoHeight;
@@ -42,6 +42,7 @@ function App() {
         // Make detections
         const obj = await net.detect(video);
 
+        //Re-order
         // Update the state with the detections
         setDetections(obj);
 

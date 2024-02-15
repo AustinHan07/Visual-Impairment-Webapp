@@ -50,7 +50,7 @@ function ObjectList(props) {
     // Add the positions to the current object
     current.positions = positions;
   }
-
+  console.log(detections[0].clockPosition);
   // Return a <div> element that renders the detections as a text box
   return (
     <div className="object-list">
@@ -61,7 +61,7 @@ function ObjectList(props) {
         rows={10}
         value={detections.map(
           (prediction) =>
-            `${prediction.class}: ${prediction.score.toFixed(2)}\n${prediction.positions.join("\n")}\n`
+            `${prediction.class}: ${prediction.score.toFixed(2)}\n${prediction.clockPosition.join("\n")}\n`
         )}
         variant="outlined"
       />
