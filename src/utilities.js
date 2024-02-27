@@ -5,6 +5,7 @@ export const drawRect = (detections, ctx) => {
     const [x, y, width, height] = prediction["bbox"];
     const text = prediction["class"];
 
+    // Generate a random color for each object
     const color = "#" + Math.floor(Math.random()*16777215).toString(16);
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
@@ -18,6 +19,7 @@ export const drawRect = (detections, ctx) => {
 
     ctx.font = `${fontSize}px Arial`;
 
+    // Draw the text and the rectangle on the canvas
     ctx.fillText(text, x + width / 2, y + height / 2);
     ctx.rect(x, y, width, height);
     ctx.stroke();
@@ -27,7 +29,6 @@ export const drawRect = (detections, ctx) => {
 export const printObjects = (detections, ctx) => {
   detections.forEach((prediction) => {
     console.log(prediction);
-
     // Get the class, score, and positions of the prediction
     const text = prediction.class;
     const score = prediction.score.toFixed(2);
@@ -44,6 +45,7 @@ export const printObjects = (detections, ctx) => {
     const fontSize = (maxSize / textLength) * 2.25; // Adjust the scaling factor as needed
 
     ctx.font = `${fontSize}px Arial`;
+
     // Get the center coordinates of the bounding box
     const x = prediction.bbox[0] + prediction.bbox[2] / 2;
     const y = prediction.bbox[1] + prediction.bbox[3] / 2;
@@ -56,7 +58,6 @@ export const printObjects = (detections, ctx) => {
     // Use Math.atan to get the angle in radians
     // Use Math.PI to convert radians to degrees
     let angle = Math.atan((centerY - y) / (x - centerX)) * (180 / Math.PI);
-    console.log(angle);
 
     // Initialize a variable to store the clock position
     let clockPosition = "";
@@ -88,16 +89,8 @@ export const printObjects = (detections, ctx) => {
         clockPosition = "Unknown";
     }
 
-    // Print the clock position below the positions
-    ctx.fillText(
-      clockPosition,
-      prediction.bbox[0] + prediction.bbox[2] / 2,
-      prediction.bbox[1] + prediction.bbox[3] + (positions.length + 1) * fontSize
-    );
-
     // Add the angle and the clock position to the prediction object
     prediction.angle = angle;
     prediction.clockPosition = clockPosition;
-
   });
 };

@@ -50,18 +50,19 @@ function ObjectList(props) {
     // Add the positions to the current object
     current.positions = positions;
   }
-  console.log(detections[0].clockPosition);
+  console.log(detections.length);
+  console.log(detections[0]);
   // Return a <div> element that renders the detections as a text box
   return (
     <div className="object-list">
       <TextField
         id="outlined-multiline-static"
-        label="Objects detected"s
+        label="Objects detected"
         multiline
         rows={10}
         value={detections.map(
           (prediction) =>
-            `${prediction.class}: ${prediction.score.toFixed(2)}\n${prediction.clockPosition.join("\n")}\n`
+            `${prediction.class}: ${prediction.score.toFixed(2)}\n${prediction.clockPosition}\n` // Use the correct syntax here
         )}
         variant="outlined"
       />
@@ -71,3 +72,4 @@ function ObjectList(props) {
 
 // Export the ObjectList component
 export default ObjectList;
+

@@ -1,11 +1,13 @@
+// Import React and TensorFlow.js dependencies
 import React, { useState, useRef, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
 import "./App.css";
+
+// Import the ObjectList and Utilities components
 import ObjectList from "./ObjectList";
-import { drawRect } from "./utilities";
-import { printObjects } from "./utilities";
+import { drawRect, printObjects } from "./utilities";
 
 function App() {
   // Create a state for the detections array
@@ -32,7 +34,7 @@ function App() {
         const video = webcamRef.current.video;
         const videoWidth = webcamRef.current.video.videoWidth;
         const videoHeight = webcamRef.current.video.videoHeight;
- 
+
         // Set the video and canvas dimensions
         webcamRef.current.video.width = videoWidth;
         webcamRef.current.video.height = videoHeight;
@@ -42,14 +44,15 @@ function App() {
         // Make detections
         const obj = await net.detect(video);
 
-        //Re-order
         // Update the state with the detections
         setDetections(obj);
 
         // Draw the detections on the canvas
         const ctx = canvasRef.current.getContext("2d");
         drawRect(obj, ctx);
-        printObjects(obj, ctx);
+
+        // Print the detections on the canvas
+        printObjects(obj, ctx); // Call the printObjects function here
       }
     };
 
@@ -100,7 +103,7 @@ function App() {
             height: 480,
           }}
         />
-        {/* Pass the detections state to the ObjectList component */}
+        {/* Render the ObjectList component and pass the detections state as a prop */}
         <ObjectList
           detections={detections}
           canvasWidth={canvasWidth}
