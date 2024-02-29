@@ -93,4 +93,6 @@ export const printObjects = (detections, ctx) => {
     prediction.angle = angle;
     prediction.clockPosition = clockPosition;
   });
+
+  return detections;
 };

@@ -44,15 +44,15 @@ function App() {
         // Make detections
         const obj = await net.detect(video);
 
-        // Update the state with the detections
-        setDetections(obj);
-
         // Draw the detections on the canvas
         const ctx = canvasRef.current.getContext("2d");
         drawRect(obj, ctx);
 
         // Print the detections on the canvas
         printObjects(obj, ctx); // Call the printObjects function here
+
+        // Update the state with the detections
+        setDetections(obj);
       }
     };
 
