@@ -1,12 +1,20 @@
-import { createContext } from "react";
-
 export const drawRect = (detections, ctx) => {
   detections.forEach((prediction) => {
     const [x, y, width, height] = prediction["bbox"];
     const text = prediction["class"];
 
     // Generate a random color for each object
-    const color = "#" + Math.floor(Math.random()*16777215).toString(16);
+    const getRandomByte = () => Math.round(Math.random() * 255);
+
+    let r, g, b;
+    
+    do {
+      r = getRandomByte();
+      g = getRandomByte();
+      b = getRandomByte();
+    } while (r < 16 || g < 16 || b < 16 || r > 239 || g > 239 || b > 239);
+  
+    const color = `#${(r * 256 ** 2 + g * 256 + b).toString(16).padStart(6, '0')}`;
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
     ctx.textAlign = "center";
@@ -31,8 +39,6 @@ export const printObjects = (detections, ctx) => {
     console.log(prediction);
     // Get the class, score, and positions of the prediction
     const text = prediction.class;
-    const score = prediction.score.toFixed(2);
-    const positions = prediction.positions;
 
     // Set the font and color of the text
     const color = "green";

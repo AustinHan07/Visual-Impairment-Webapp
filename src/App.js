@@ -67,8 +67,8 @@ function App() {
     runCoco();
   }, []);
 
-  const canvasWidth = 640;
-  const canvasHeight = 480;
+  const canvasWidth = 1080;
+  const canvasHeight = 810;
 
   return (
     <div className="App">
@@ -81,11 +81,11 @@ function App() {
             marginLeft: "auto",
             marginRight: "auto",
             left: 0,
-            right: 0,
+            right: 420,
             textAlign: "center",
             zindex: 9,
-            width: 640,
-            height: 480,
+            width: 1080,
+            height: 810,
           }}
         />
 
@@ -96,11 +96,11 @@ function App() {
             marginLeft: "auto",
             marginRight: "auto",
             left: 0,
-            right: 0,
+            right: 420,
             textAlign: "center",
             zindex: 8,
-            width: 640,
-            height: 480,
+            width: 1080,
+            height: 810,
           }}
         />
         {/* Render the ObjectList component and pass the detections state as a prop */}

@@ -7,10 +7,6 @@ function ObjectList(props) {
   // Get the detections array from the props
   const detections = props.detections;
 
-  // Get the canvas width and height from the props
-  const canvasWidth = props.canvasWidth;
-  const canvasHeight = props.canvasHeight;
-
   // Define a threshold for distance
   const threshold = 100;
 
@@ -53,18 +49,20 @@ function ObjectList(props) {
   console.log(detections.length);
   console.log(detections[0]);
   // Return a <div> element that renders the detections as a text box
+  // Return a <div> element that renders the detections as a text box
   return (
     <div className="object-list">
       <TextField
         id="outlined-multiline-static"
         label="Objects detected"
         multiline
-        rows={10}
+        rows={50}
         value={detections.map(
           (prediction) =>
-            `${prediction.class}: ${prediction.score.toFixed(2)}\n${prediction.clockPosition}\n` // Use the correct syntax here
+            `${prediction.class}: ${prediction.score.toFixed(2)}\n${prediction.clockPosition}\n` //Print object, accuracy, and clock position
         )}
         variant="outlined"
+        InputProps={{ style: { fontSize: "25px" } }} 
       />
     </div>
   );
