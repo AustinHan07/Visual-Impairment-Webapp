@@ -1,11 +1,13 @@
+// Import React and TensorFlow.js dependencies
 import React, { useState, useRef, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
 import "./App.css";
+
+// Import the ObjectList and Utilities components
 import ObjectList from "./ObjectList";
-import { drawRect } from "./utilities";
-import { printObjects } from "./utilities";
+import { drawRect, printObjects } from "./utilities";
 
 function App() {
   // Create a state for the detections array
@@ -42,13 +44,16 @@ function App() {
         // Make detections
         const obj = await net.detect(video);
 
-        // Update the state with the detections
-        setDetections(obj);
-
         // Draw the detections on the canvas
         const ctx = canvasRef.current.getContext("2d");
-        printObjects(obj, ctx);
+
         drawRect(obj, ctx);
+
+        // Print the detections on the canvas
+        printObjects(obj, ctx); // Call the printObjects function here
+
+        // Update the state with the detections
+        setDetections(obj);
       }
     };
 
@@ -63,8 +68,8 @@ function App() {
     runCoco();
   }, []);
 
-  const canvasWidth = 640;
-  const canvasHeight = 480;
+  const canvasWidth = 1080;
+  const canvasHeight = 810;
 
   return (
     <div className="App">
@@ -77,11 +82,11 @@ function App() {
             marginLeft: "auto",
             marginRight: "auto",
             left: 0,
-            right: 0,
+            right: 420,
             textAlign: "center",
             zindex: 9,
-            width: 640,
-            height: 480,
+            width: 1080,
+            height: 810,
           }}
         />
 
@@ -92,14 +97,14 @@ function App() {
             marginLeft: "auto",
             marginRight: "auto",
             left: 0,
-            right: 0,
+            right: 420,
             textAlign: "center",
             zindex: 8,
-            width: 640,
-            height: 480,
+            width: 1080,
+            height: 810,
           }}
         />
-        {/* Pass the detections state to the ObjectList component */}
+        {/* Render the ObjectList component and pass the detections state as a prop */}
         <ObjectList
           detections={detections}
           canvasWidth={canvasWidth}
