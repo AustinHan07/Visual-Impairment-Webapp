@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Visual Impairment Webapp
+
+This is information about the app!
 
 ## Available Scripts
 
