@@ -47,8 +47,8 @@ function App() {
 
         // Draw the detections on the canvas
         const ctx = canvasRef.current.getContext("2d");
-        drawRect(obj, ctx);
         printObjects(obj, ctx);
+        drawRect(obj, ctx);
       }
     };
 
