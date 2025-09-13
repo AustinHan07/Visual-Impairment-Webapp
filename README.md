@@ -4,7 +4,7 @@ This is information about the app!
 
 ## About
 
-This Artificial Intelligence Vision Impairment Guide is a web app designed to detect surrounding objects and relay them to the user through visual cues. The web app is made through HTML and JavaScript on Visual Studio Code, and it runs on a separate website on the Google browser. The app takes input from the camera and uses the TensorFlow library for AI and machine learning to detect the objects in the camera view. The website displays the camera view from the device alongside boxes drawn around the objects, the predicted object’s name, its prediction accuracy, and its position relative to that of the top half of a clock. 
+This Artificial Intelligence Vision Impairment Guide is a web app designed to detect surrounding objects and relay them to the user through visual cues. The web app implements real-time AI object detection with TensorFlow.js COCO-SSD, providing visually impaired users with accurate, real-time information to navigate their surroundings. The following provides the source code used to run through Visual Studio Code and on a separate website on the Google browser. The app takes input from the camera and uses the TensorFlow library for AI and machine learning to detect the objects in the camera view. The website displays the camera view from the device alongside boxes drawn around the objects, the predicted object’s name, its prediction accuracy, and its position relative to that of the top half of a clock. 
 
 ### Open Web App
 
